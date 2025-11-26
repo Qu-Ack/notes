@@ -78,6 +78,17 @@
   style: "italic",
 )
 
+#show heading.where(level: 3): set text(
+  size: 11pt,
+  weight: "bold",
+)
+
+#show heading.where(level: 4): set text(
+  size: 10pt,
+  weight: "bold",
+  style: "italic",
+)
+
 = Introduction
 Sports analytics powered by deep learning represents an area where significant research has been conducted to improve the understanding and analysis of athletic performance. However, despite these efforts, this remains a field with limited comprehensive surveys and is still very much a developing domain. There is considerable scope for advancement in this area, and we aim to help with this survey by comparing different research that has happened since the early applications of deep learning in sports and examining what the future prospects might be for researchers looking to contribute to this field.
 \
@@ -106,9 +117,6 @@ This section will act as a reference to the reader providing quick definitions a
 - LSTM 
 - tanh
 
-
-
-
 = Researches
 
 
@@ -130,7 +138,79 @@ This organizational structure ensures clarity, coherence, and comparability acro
 
 == Game Prediction
 
+In this category researches focused on predicting probabilities of micro actions in game that might occur using different parameters such as player positions, ball positions, linup etc. This section is composed of two researches one for soccer and another for basketball and will summarize their approach the problem they solved, the dataset they used, the models they used and of course the results that were obtained along with the metrics that were used to measure them.
+
+=== SoccerMap [LINK]
+
+#figure(
+  image("soccer_map_arch.jpg", width: 100%),
+  caption: [Architecture of the SoccerMap model.]
+)
+
+==== Objective
+
+SoccerMap aims to estimate continuous probability surfaces representing potential passing locations during a soccer match. The method enables coaches and analysts to visually inspect and understand player positioning, decision-making tendencies, and tactical structures throughout a game.
+
+==== Methodological Framework
+
+The model uses convolution layers to pick up meaningful patterns from the soccer field map at different zoom levels while keeping the image size unchanged and avoiding border issues. It downsamples the map with pooling to understand broader, more general patterns, then upsamples it smoothly to regain detail without creating visual artifacts. A fully convolutional design allows the model to make a prediction at every location on the field rather than just one final output. Finally, small 1×1 filters are used to turn these learned features into passing-probability predictions at each spot, and information from different zoom levels is combined so the model benefits from both fine and coarse details.
+
+==== Dataset
+
+high frequency, spatio temporal data is used. tracking data extracted from videos of soccer match consisting of 2d locations of players and the ball at 10 frames per second, allong with manually tagged passes, they arranged the data in a matrix of c x l x h, where l and h are the high level field coordinates and c represents the low level parameters that are passed to this architecture. low level features are calculated with things like liklehood of nearby teammates
+
+they used tracking data, and event data from 740 English Premier League matches
+from the 2013/2014 and 2014/2015 season, provided by STATS LLC [LINK].
+
+==== Models Implemented
+
+they used a combination of models combining them in a single architecture, they are mentioned in fig.1
+
+==== Results and Conclusions
+
+They split the data into 60:20:20 split which means 60% training data, 20% validation data, 20% test data.
+
+They benchmarked against two models. Logistic Net and Dense2 Net. Logistic Net consists of a single _sigmoid_ [KEYWORD] activation unit while Dense2 is _Neural network_ [KEYWORD] with two dense layers followed by _ReLu_ [KEYWORD] [LINK] activation unit and a sigmoid output unit.
+
+The Metrics they used are _Negative Log Loss_ [KEYWORD] and _ECE_ [KEYWORD] for every model 
 
 
+#show table: set text(
+  size: 8pt,
+)
 
+
+#table(
+  columns: (auto, auto, auto, auto, auto),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [*Model*], [*Log-loss*], [*ECE*], [*Inference time*], [*Number of parameters*],
+  ),
+  "Naive",
+  $0.5451$,
+  "-",
+  "-",
+  $0$,
+  "Logistic Net",
+  $0.384$,
+  "0.0210",
+  "0.00199s",
+  $11$,
+  "Dense2 Net",
+  $0.349$,
+  "0.0640",
+  "0.00231s",
+  $231$,
+  "Soccer Map",
+  $0.217$,
+  "0.0225",
+  "0.00457s",
+  $401, 259$,
+)
+
+#figure(
+  image("soccer_map_results.jpg", width: 80%),
+  caption: [Visual comparison of model outputs on pass-probability surfaces.]
+)
 

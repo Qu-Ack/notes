@@ -71,29 +71,11 @@ The Metrics they used are Negative Log Loss and ECE. for every model
 
 Below is the table of the results of their research, fig 2 shows the visual representation of the results.
 
-Model
-Log-loss
-ECE
-Inference time Number of parameters
-Naive
-0.5451
-−
-−
-0
-Logistic Net
-0.384
-0.0210
-0.00199s
-11
-Dense2 Net
-0.349
-0.0640
-0.00231s
-231
-SoccerMap
-0.217 0.0225
-0.00457s
-401, 259
+Model         Log-loss ECE     Inferencetime Number of parameters
+Naive         0.5451   −        −            0
+Logistic Net  0.384    0.0210  0.00199s      11
+Dense2 Net    0.349    0.0640  0.00231s      231
+SoccerMap     0.217    0.0225  0.00457s      401, 259
 
 
 # DeepHoops: Evaluating Micro-Actions In Basketball 
@@ -117,7 +99,7 @@ set of terminal actions included
 - turnover
 - null
 
-the architecture is mentioned above in fig 3. they used two modules one was a stacked LSTM network which was responsible in learning representation of the data up to time tao, this allowed for important information about on-court actions. the additional module was used to model who is on the courl to assess the impact of different lineups
+the architecture is mentioned above in fig 3. they used two modules one was a stacked _LSTM [LINK] [KEYWORD] network which was responsible in learning representation of the data up to time tao, this allowed for important information about on-court actions. the additional module was used to model who is on the courl to assess the impact of different lineups
 
 they use 32 LSTM cells for each 3 layers.
 
@@ -131,32 +113,13 @@ They used a stacked LSTM network. mentioned in fig 3
 
 ## results and conclusions
 
-The metric they used to calculate the accuracy was Brier Score over 5 epochs with minimum improvement rate of 0.01
+The metric they used to calculate the accuracy was _Brier Score_ [KEYWORD] [LINK] over 5 _epochs_ [KEYWORD] with minimum _improvement rate_ [KEYWORD] of 0.01
 
-BS
-BSref
-BSS
-Epoch Time (s)
-K = 1
-0.4569
-0.6070
-0.2472
-2180
-K = 2
-0.3598
-0.4920
-0.2686
-2929
-K = 3
-0.3094
-0.4017
-0.2299
-3552
-K = 4
-0.2659
-0.3371
-0.2114
-4200
+        BS      BSref   BSS     Epoch Time (s)
+K = 1   0.4569  0.6070  0.2472  2180
+K = 2   0.3598  0.4920  0.2686  2929
+K = 3   0.3094  0.4017  0.2299  3552
+K = 4   0.2659  0.3371  0.2114  4200
 
 below are the reliability curves of the DeepHoops Model
 
