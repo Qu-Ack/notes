@@ -174,7 +174,6 @@ They benchmarked against two models. Logistic Net and Dense2 Net. Logistic Net c
 
 The Metrics they used are _Negative Log Loss_ [KEYWORD] and _ECE_ [KEYWORD] for every model 
 
-
 #figure(
   image("soccer_map_results.jpg", width: 80%),
   caption: [Visual comparison of model outputs on pass-probability surfaces.]
@@ -448,7 +447,6 @@ The below table showcase the results of the model with the baseline models.
   size: 8pt,
 )
 
-
 #figure(
   caption: [Results of Depth Estimation Network],
   table(
@@ -464,9 +462,4 @@ The below table showcase the results of the model with the baseline models.
     $0.843$,
   )
 )
-
-
-
-
-
 

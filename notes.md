@@ -1,6 +1,5 @@
 # Readings
 
-
 ### game wining probabilitites and predictions.
 
 Ganguly, S., Frank, N.: The problem with win probability. In: Proceedings of MIT
@@ -13,7 +12,6 @@ Sicilia, A., Pelechrinis, K., Goldsberry, K.: Deephoops: Evaluating micro-action
 basketball using deep feature representations of spatio-temporal data. In: Proceed-
 ings of ACM International Conference on Knowledge Discovery & Data Mining,
 KDD 2019, Anchorage, AK, USA, 4–8 Aug 2019, pp. 2096–2104 (2019
-
 
 ### 3d game simulation
 
@@ -28,10 +26,7 @@ preprint arXiv:1608.03793 (2016)
 basketball play simulation through sketching. arXiv preprint arXiv:1909.07088
 (2019)
 
-
-
 ### game action categorization
-
 
 Baccouche, M., Mamalet, F., Wolf, C., Garcia, C., Baskurt, A.: Action classifica-
 tion in soccer videos with long short-term memory recurrent neural networks. In:
@@ -46,8 +41,6 @@ ing and Retrieval, pp. 270–273. IEEE (2019)
 Ullah, A., Ahmad, J., Muhammad, K., Sajjad, M., Baik, S.W.: Action recogni-
 tion in video sequences using deep bi-directional LSTM with CNN features. IEEE
 Access 6, 1155–1166 (2017)
-
-
 
 # SoccerMap: A deep learning architecture for visually-interpretable analysis in soccer
 
@@ -136,8 +129,6 @@ K = 3   0.3094  0.4017  0.2299  3552
 K = 4   0.2659  0.3371  0.2114  4200
 
 below are the reliability curves of the DeepHoops Model
-
-
 
 # Soccer On Your TableTop  
 
@@ -230,7 +221,7 @@ respect to the rim.
 
 # the models or algorithms implemented
 
-The research uses RNN (Recurrent Neural Networks) with the long short-term memory (LSTM) units 
+The research uses RNN (Recurrent Neural Networks) with the long short-term memory(LSTM) units 
 
 # results and conclusions
 
@@ -242,6 +233,5 @@ The below table showcase the results of the model with the baseline models.
 
         GLM         GBM     RNN
 AUC     0.53        0.80    0.843
-
 
 
