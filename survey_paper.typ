@@ -297,7 +297,11 @@ examined). Epoch Time (in seconds) is lowest over all epochs],
   )
 )
 #figure(
-  image("soccer_map_results.jpg", width: 80%),
+  image("deephoops_result.jpg", width: 80%),
   caption: [reliability Curves for DeepHoops’ probability estimates. The dashed line y = x represents perfect calibration]
 )
+
+
+== 3D Game Simulation
+
 

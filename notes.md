@@ -15,6 +15,20 @@ ings of ACM International Conference on Knowledge Discovery & Data Mining,
 KDD 2019, Anchorage, AK, USA, 4–8 Aug 2019, pp. 2096–2104 (2019
 
 
+### 3d game simulation
+
+Rematas, K., Kemelmacher-Shlizerman, I., Curless, B., Seitz, S.: Soccer on your
+tabletop. In: Proceedings of the IEEE Conference on Computer Vision and Pattern
+Recognition, pp. 4738–4747 (2018)
+
+Shah, R., Romijnders, R.: Applying deep learning to basketball trajectories. arXiv
+preprint arXiv:1608.03793 (2016)
+
+ Hsieh, H.Y., Chen, C.Y., Wang, Y.S., Chuang, J.H.: Basketballgan: Generating
+basketball play simulation through sketching. arXiv preprint arXiv:1909.07088
+(2019)
+
+
 
 ### game action categorization
 
@@ -122,5 +136,112 @@ K = 3   0.3094  0.4017  0.2299  3552
 K = 4   0.2659  0.3371  0.2114  4200
 
 below are the reliability curves of the DeepHoops Model
+
+
+
+# Soccer On Your TableTop  
+
+# Objective
+
+    The objective of the researchers was to transform a monocular video of a soccer game into a 3d reconstruction, in which players would be rendered interactively with an Augmented Reality Device.
+
+# the methodological framework adopted by the authors,
+
+A key component for the researchers was to estimate the _depth map_ [KEYWORD] of a particular player. 
+
+They used a depth estimation neural network. the input was a 256x256 RGB cropped image. The input is processed by a series of 8 _hourglass modules_ [KEYWORD] [LINK] and the output is a 64x64x50 volume. representing 49 quantized depths and 1 background class.
+
+The model was trained with entropy loss with a batch size of 6 for 300 epochs. 
+
+they estimate a virtual vertical plane passing through the
+middle of the player and calculate its depth w.r.t. the cam-
+era. Then, we find the distance in depth values between a
+player’s point and the plane. The distance is quantized into
+49 bins (1 bin at the plane, 24 bins in front, 24 bins behind)
+at a spacing of 0.02 meters, roughly covering 0.5 meters in
+front and in back of the plane (1 meter depth span).
+
+
+then they follow a pipeline to reconstruct the full 3d game 
+
+which includes camera Pose Estimation then Player Detection and Tracking and then mesh generation this way they are able to get a 3d reconstruction of the orignal 2d game.
+
+# the datasets utilized, including details on their acquisition and construction
+
+researchers aquire the dataset of depthmaps for players by intercepting GPU calls between the game engine and the GPU of the game FIFA using RenderDoc. they aquired the _NDC_ [KEYWORD] (Normalized Device Coordinates). This process gives them a point cloud and after removing everything but the player they collected 12000 image-depth pairs
+
+# the models or algorithms implemented
+they used a _CNN_ [KEYWORD] [LINk] with hour glass modules to estimate the depth buffers for 2d images.  
+
+# results and conclusions
+
+They evaluate their performance using a held-out datasets from FIFA video game captures. the data was created using the same process as in training data and contained 32 RGB depth pairs of images. The metric they used to measure their performance was (scale invariant- Root Mean Squared) _st-RMSE_ [KEYWORD].  
+
+They compare with three different approaches 
+
++ non human-specific depth estimation [LINK]
++ human-specific depth estimation [LINK]
++ fitting a parametric human shape model to 2D pose estimation [LINK]
+
+The table below shows the result obtained
+
+                        st-RMSE         IoU
+Non-human training      0.92            -
+Non-soccer training     0.16            0.41
+Parametric Shape        0.14            0.61
+Their Model             0.06            0.86
+
+
+# Deep Learning in Basketball Trajectories
+
+
+# the problem formulation and research objec­tive,
+
+This research uses Recurrent Neural Networks _(RNN)_ [KEYWORD] [LINK] to predict whether a 3 point shot would be successfull or not 
+
+# the methodological framework adopted by the authors,
+
+Popular variant of RNN with long-short term memory (LSTM) is used. the network architecture relies on a two layered LSTM using peephole connections. the input to the LSTM is the XYZ data and the game clock. at each time step RNN predicts the probabilitiy of a successfull shot. the probability comes from a softmax layer and is trained based on cross entropy error.
+
+An Adam optimizer is used in the model.
+
+# the datasets utilized, including details on their acquisition and construction
+
+the dataset used in the study stems from the publically availaible SportsVu dataset. SportVu is an optical tracking system
+installed by the National Basketball Association (NBA) in all 30 courts to collect real-time data. The tracking system 
+records the spatial position of the ball and players on the court 25 times a second during a game.
+
+The dataset consisted of over 20,000 three point shots attempts from 631 games. the data was taken from the NBA site in the beginning of 2015-2016. The percentage of made shots in the data set is 35.7%. Fig 5 shows the example of the dataset used.
+
+The first dataset consists of only the X, Y, Z, and game
+clock variables representing the location of the ball in three
+dimensions over time. X refers to the length of the court,
+Y is the width of the court, and Z is the height of the ball.
+A second dataset is created with additional variables based
+on the physics of ball trajectories. The belief was that these
+variables would add more information over just the location
+data for machine learning models. Specifically, the added
+variables included the difference in movement over each time
+period for each dimension. Three other variables included:
+the distance to the center point of the rim, the difference
+over time for this distance, and the angle of the ball with
+respect to the rim.
+
+
+# the models or algorithms implemented
+
+The research uses RNN (Recurrent Neural Networks) with the long short-term memory (LSTM) units 
+
+# results and conclusions
+
+The data is split in a 80:20 split for training and test respectively.
+
+The metric they used to measure their accuracy was _AUC_ [KEYWORD] [LINK]. they build classifiers using a Generalized Linear Model (GLM) and gradient boosted machines (GBM) 
+
+The below table showcase the results of the model with the baseline models.
+
+        GLM         GBM     RNN
+AUC     0.53        0.80    0.843
+
 
 
