@@ -175,10 +175,14 @@ They benchmarked against two models. Logistic Net and Dense2 Net. Logistic Net c
 The Metrics they used are _Negative Log Loss_ [KEYWORD] and _ECE_ [KEYWORD] for every model 
 
 
+#figure(
+  image("soccer_map_results.jpg", width: 80%),
+  caption: [Visual comparison of model outputs on pass-probability surfaces.]
+)
+
 #show table: set text(
   size: 8pt,
 )
-
 
 #table(
   columns: (auto, auto, auto, auto, auto),
@@ -209,8 +213,91 @@ The Metrics they used are _Negative Log Loss_ [KEYWORD] and _ECE_ [KEYWORD] for 
   $401, 259$,
 )
 
+
+=== DeepHoops [LINK]
+
+#figure(
+  image("deephoops_arch.jpg", width: 100%),
+  caption: [Architecture of the DeepHoops model.]
+)
+
+==== Objective
+
+They created a Neural Network Architecture called DeepHoops which analyses spatio temoporal data of NBA games and predicts expected points to be scored as progression progresses. They estimate the probabiliites of terminal actions (e.g take goal, foul, turnover), each of these terminal actions is associated with an expected point value.
+
+==== Methodological Framework
+
+they used a concept of possessions which is a sequence of n moments where each moment is a 24-dimenstional vector. the first 20 capture the location of 10 players (x, y). the next three represent the court location and height of the ball (x, y, z), the last elements represents the current value of shot clock. 
+
+their dataset consisted of more than 134,000 such possessions of interest.
+
+they define a temporal window which acts as input to the DeepHoops architecture. window defined at a moment tao captures T moments up to a time of interest.
+
+each window is labelled with an outcome that represents the type of terminal action that occured at the end of the window.
+
+set of terminal actions included
+- field goal attempts
+- shooting foul
+- Non-shooting foul
+- turnover
+- null
+
+the architecture is mentioned above in fig 3. they used two modules one was a stacked _LSTM_ [LINK] [KEYWORD] network which was responsible in learning representation of the data up to time tao, this allowed for important information about on-court actions. the additional module was used to model who is on the courl to assess the impact of different lineups
+
+they use 32 LSTM cells for each 3 layers.
+
+==== Dataset
+
+they used optical tracking data of 750 NBA games, which represents NBA games as athree dimensional coordinate system. the data they used was highly annotated and allowed labelling.
+
+==== Models Implemented
+
+They used a stacked LSTM network. mentioned in fig 3
+
+==== Results and Conclusions
+
+The metric they used to calculate the accuracy was _Brier Score_ [KEYWORD] [LINK] over 5 _epochs_ [KEYWORD] with minimum _improvement rate_ [KEYWORD] of 0.01
+
+#show table: set text(
+  size: 8pt,
+)
+
+
+#figure(
+  caption: [DeepHoops Brier Score (BS ), Climatology Model Brier Score (BSref ), and DeepHoops Brier Skill Score (BSS ).
+DeepHoops outperforms the climatology (baseline) model in all cases. Performance is best for K = 2 (among the values
+examined). Epoch Time (in seconds) is lowest over all epochs],
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [], [*BS*], [*BS_ref*], [*BSS*], [*Epoch Time (s)*],
+    ),
+    "K = 1",
+    $0.4569$,
+    "0.6070",
+    "0.2472",
+    $2180$,
+    "K = 2",
+    $0.3598$,
+    "0.4920",
+    "0.2686s",
+    $2929$,
+    "K = 3",
+    $0.3094$,
+    "0.4017",
+    "0.2299s",
+    $3552$,
+    "K = 4",
+    $0.2659$,
+    $0.3371$,
+    $0.2114$,
+    $4200$,
+  )
+)
 #figure(
   image("soccer_map_results.jpg", width: 80%),
-  caption: [Visual comparison of model outputs on pass-probability surfaces.]
+  caption: [reliability Curves for DeepHoops’ probability estimates. The dashed line y = x represents perfect calibration]
 )
 
