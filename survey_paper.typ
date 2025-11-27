@@ -5,7 +5,7 @@
   ],
 
   numbering: "(1/1)",
-  columns: 2,
+  columns: 1,
 )
 
 #set par(justify: true)
@@ -63,7 +63,7 @@
 
 #set heading(numbering: "1.")
 
-#show heading: set align(center)
+#show heading: set align(left)
 #show heading: set block(below: 1.2em)
 #show heading: set text(
   size: 13pt,
@@ -183,33 +183,37 @@ The Metrics they used are _Negative Log Loss_ [KEYWORD] and _ECE_ [KEYWORD] for 
   size: 8pt,
 )
 
-#table(
-  columns: (auto, auto, auto, auto, auto),
-  inset: 10pt,
-  align: horizon,
-  table.header(
-    [*Model*], [*Log-loss*], [*ECE*], [*Inference time*], [*Number of parameters*],
-  ),
-  "Naive",
-  $0.5451$,
-  "-",
-  "-",
-  $0$,
-  "Logistic Net",
-  $0.384$,
-  "0.0210",
-  "0.00199s",
-  $11$,
-  "Dense2 Net",
-  $0.349$,
-  "0.0640",
-  "0.00231s",
-  $231$,
-  "Soccer Map",
-  $0.217$,
-  "0.0225",
-  "0.00457s",
-  $401, 259$,
+
+#figure(
+  
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [*Model*], [*Log-loss*], [*ECE*], [*Inference time*], [*Number of parameters*],
+    ),
+    "Naive",
+    $0.5451$,
+    "-",
+    "-",
+    $0$,
+    "Logistic Net",
+    $0.384$,
+    "0.0210",
+    "0.00199s",
+    $11$,
+    "Dense2 Net",
+    $0.349$,
+    "0.0640",
+    "0.00231s",
+    $231$,
+    "Soccer Map",
+    $0.217$,
+    "0.0225",
+    "0.00457s",
+    $401, 259$,
+  )
 )
 
 
