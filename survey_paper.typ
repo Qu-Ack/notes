@@ -384,7 +384,7 @@ They compare with three different approaches
 
 #figure(
   image("soccer_table_results.jpg", width: 80%),
-  caption: [reliability Curves for DeepHoops’ probability estimates. The dashed line y = x represents perfect calibration]
+  caption: [results of the experiment]
 )
 
 
@@ -412,7 +412,7 @@ The dataset consisted of over 20,000 three point shots attempts from 631 games. 
 
 #figure(
   image("basketball_data.jpg", width: 80%),
-  caption: [reliability Curves for DeepHoops’ probability estimates. The dashed line y = x represents perfect calibration]
+  caption: [basketball data examples]
 )
 
 
@@ -448,7 +448,7 @@ The below table showcase the results of the model with the baseline models.
 )
 
 #figure(
-  caption: [Results of Depth Estimation Network],
+  caption: [Results of Experiment],
   table(
     columns: (auto, auto, auto, auto),
     inset: 10pt,
@@ -462,4 +462,85 @@ The below table showcase the results of the model with the baseline models.
     $0.843$,
   )
 )
+
+== Game Action Categorization
+
+This cateogry focuses on classifying video sequences based on the actions that are being performed inside them. Examples for such actions in soccer would be free kick, red card/yellow card, goal, outside etc. In this section as always we will mention 2 researches focusing on this area providing a summary 
+
+
+
+=== Action Classification using LSTM RNN
+
+
+==== Objective
+
+The main problem the researches are trying to solve is how can a video sequence which is just a series of frames be classified according to the actions that are beign peformed in the video. They picked Soccer to conduct this research on. They relied solely on the visual content analysis to classify different actions which is different from previous approaches who utilized prior knowledge to classify actions.
+
+==== Methodological Framework
+
+For every video, we divide it into frames, and each frame is converted into a descriptor (one descriptor per image). Then we train an LSTM-RNN to predict which action is being performed. These descriptors change over time according to the frames. The final decision is made by combining all frame-level decisions.
+
+fig. 7 show's the approach.
+
+#figure(
+  image("action_approach.jpg", width: 80%),
+  caption: [approach used by researchers]
+)
+
+Features are extracted in the following way :- 
+
++ Visual content representation: A Bag of Words approach BoW is a method that recognizes objects using a histogram of visual words (meaning a pattern that repeats across many images). One BoW is taken for each frame.
+
++ A SIFT-based approach for Dominant Motion Estimation Researchers added an extra feature called dominant motion, which captures movement in the video, especially the camera's movement. They extract SIFT feature points from two consecutive frames, then match these points (using a KD-tree) to understand the motion. TV logos, which have no motion, are removed. RANSAC is used so that only camera motion remains while ignoring players' random movement.
+
+
+==== Dataset
+
+they used the MICC-Soccer-Actions-4 Dataset. 
+
+==== Models Implemented
+
+Action classification using _LSTM-RNN_[KEYWORD][LINK] is done by feeding each frame’s descriptor to the network timestep-by-timestep, where the LSTM, an improved version of RNN, handles long term information using CEC (Constant Error Carousel) and gates that decide what to store or discard, overcoming the issue of RNNs forgetting old information in long sequences. The network architecture consists of one hidden RNN layer whose size depends on the input features, and a SoftMax layer at the output to make predictions at each timestep. A total of 150 LSTM cells are used more can cause _overfitting_ [KEYWORD], while fewer may prevent proper learning and the model is trained using Online _BPTT_ [KEYWORD] [LINK] with a _learning rate_[KEYWORD] of 10⁻⁴ and momentum 0.9.
+
+==== Results and Conclusions
+
+all the experiments conducted by the researchers were carried out on MICC-
+Soccer-Actions-4 dataset [LINK] with a _3-fold cross validation scheme_ [KEYWORD]
+
+Fig 8 showcases the confusion matrices of different approaches
+
+#figure(
+  image("action_results.jpg", width: 80%),
+  caption: [Confusion matrices : (a) - BoW-based approach (b) - Dominant motion-based approach (c) - Combination of the BoW and the dominant motion]
+)
+
+below is the table that showcase the results
+
+
+#show table: set text(
+  size: 8pt,
+)
+
+#figure(
+  caption: [Results of Experiment],
+  table(
+    columns: (auto, auto),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [], [*Classification Rate*]
+    ),
+    "BoW + k-NN [LINK]",
+    "73.25%",
+    "BoW + SVM [LINK]",
+    "73.25%",
+    "BoW + LSTM-RNN [LINK]",
+    "76%",
+    "Dominant motion + LSTM-RNN",
+    "77%",
+    "BoW + dominant motion + LSTM-RNN",
+    "92%",
+  )
+)
+
 

@@ -235,3 +235,48 @@ The below table showcase the results of the model with the baseline models.
 AUC     0.53        0.80    0.843
 
 
+# Action Classification using LSTM RNN
+
+# the problem formulation and research objec­tive,
+    The main problem the researches are trying to solve is how can a video sequence which is just a series of frames be classified according to the actions that are beign peformed in the video. They picked Soccer to conduct this research on. They relied solely on the visual content analysis to classify different actions which is different from previous approaches who utilized prior knowledge to classify actions.
+
+# the methodological framework adopted by the authors,
+
+For every video, we divide it into frames, and each frame is converted into a descriptor (one descriptor per image). Then we train an LSTM-RNN to predict which action is being performed. These descriptors change over time according to the frames. The final decision is made by combining all frame-level decisions.
+
+fig. 7 show's the approach.
+
+
+Features are extracted in the following way :- 
+
++ Visual content representation: A Bag of Words approach
+BoW is a method that recognizes objects using a histogram of visual words (meaning a pattern that repeats across many images). One BoW is taken for each frame.
+
++ A SIFT-based approach for Dominant Motion Estimation
+Researchers added an extra feature called dominant motion, which captures movement in the video, especially the camera's movement.
+They extract SIFT feature points from two consecutive frames, then match these points (using a KD-tree) to understand the motion. TV logos, which have no motion, are removed. RANSAC is used so that only camera motion remains while ignoring players' random movement.
+
+
+# the datasets utilized, including details on their acquisition and construction
+they used the MICC-Soccer-Actions-4 Dataset. 
+
+# the models or algorithms implemented
+
+Action classification using _LSTM-RNN_[KEYWORD][LINK] is done by feeding each frame’s descriptor to the network timestep-by-timestep, where the LSTM, an improved version of RNN, handles long term information using CEC (Constant Error Carousel) and gates that decide what to store or discard, overcoming the issue of RNNs forgetting old information in long sequences. The network architecture consists of one hidden RNN layer whose size depends on the input features, and a SoftMax layer at the output to make predictions at each timestep. A total of 150 LSTM cells are used more can cause _overfitting_ [KEYWORD], while fewer may prevent proper learning and the model is trained using Online _BPTT_ [KEYWORD] [LINK] with a _learning rate_[KEYWORD] of 10⁻⁴ and momentum 0.9.
+
+# results and conclusions
+
+all the experiments conducted by the researchers were carried out on MICC-
+Soccer-Actions-4 dataset [LINK] with a _3-fold cross validation scheme_ [KEYWORD]
+
+below is the table that showcase the results
+
+                                            Classification Rate
+BoW + k-NN [LINK]                              52,75 %
+BoW + SVM  [LINK]                              73,25 %
+BoW + LSTM-RNN                                 76 %
+Dominant motion + LSTM-RNN                     77 %
+BoW + dominant motion + LSTM-RNN               92 %
+
+Fig 8 showcases the confusion matrices of different approaches
+
